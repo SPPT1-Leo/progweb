@@ -1,0 +1,1 @@
+-- insert into user (idUser, name, last, user, password) values (1, 'leo', 'lima', 'admin','admin');

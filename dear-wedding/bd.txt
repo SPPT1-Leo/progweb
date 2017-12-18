@@ -1,0 +1,28 @@
+-- DROP DATABASE progweb;
+
+
+CREATE DATABASE progweb
+	DEFAULT CHARACTER SET utf8
+	DEFAULT COLLATE utf8_general_ci;
+
+use progweb;
+
+
+CREATE TABLE user (
+	idUser int PRIMARY KEY not null auto_increment,
+	user varchar(15) not null,
+	password varchar(20) not null,
+	name varchar(45) not null,
+	last varchar(45) not null
+    
+)DEFAULT CHARSET=utf8;
+
+CREATE TABLE post (
+	idPost  int PRIMARY KEY not null auto_increment,
+	title varchar(60) not null,
+	msg text,
+	image blob not null,
+	date timestamp default current_timestamp(),
+	user INT not null,
+	FOREIGN KEY (user) REFERENCES user(idUser)  
+) DEFAULT CHARSET=utf8;
