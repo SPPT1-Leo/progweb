@@ -3,47 +3,80 @@
 		require_once("connect.php");
 		require_once("check.php");
 	
-		$picture = $_FILES['picture'];
-		$title = $_POST['title'];
-		$email = $_POST['email'];
-		$msg = $_POST['msg'];
-		$user = $_SESSION['idUser'];
-		$time = now();
+		// $picture = $_FILES['picture'];
+		// $title = $_POST['title'];
+		// $email = $_POST['email'];
+		// $msg = $_POST['msg'];
+		// $user = $_SESSION['idUser'];
+		// $time = now();
 
 		//POST
 		
 			// CÓDIGO AQUI
+		
+		//Verifica se a foto foi selecionada
 
 		if(isset($_POST['Submit'])){
 
-			$nomeFinal = time().'.jpg';
-			if(move_uploaded_file($picture['tmp_name'], $nomeFinal)){
+			$picture = $_FILES['picture'];
+			$title = $_POST['title'];
+			$email = $_POST['email'];
+			$msg = $_POST['msg'];
+			$user = $_SESSION['idUser'];
+			$time = now();
 
-				$tamanhoImg = filesize($nomeFinal);
+			if(!empty($picture["name"])){
 
-				$mysqlImg = addslashes(fread(fopen($nomeFinal, "r"), $tamanhoImg));
+				$error = array();
 
-				var_dump($mysqlImg);
+				// Verifica se é uma imagem
 
-				$sql = "INSERT INTO post (title, msg, image, date, user) values ('$title', '$msg', $picture, $time, '$user');"
+				if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $picture["type"])){
 
-				$result = mysqli_query($mysqli, $sql);
+					$error[1] = "Isso não é uma imagem!";
 
-				echo "Picture uploaded successfully";
+				}
 
-				unlink($nomeFinal);
+				//Pega as dimensões da imagem
+				$dimensoes = getimagesize($foto['tmp_name']);
 
-				header("location: feed.php");
+				if(count($error) == 0){
+
+					//Pega a extensão da imagem.
+					preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $picture["name"], $ext);
+
+					//Gera um nome único para a imagem
+					$nome_imagem = md5(uniqid(time())) . "." . $ext[1];
+
+					//Caminho onde ficará a imagem
+					$caminho_imagem = "images/" . $nome_imagem;
+
+					//Faz o upload da imagem para a pasta
+					move_uploaded_file($foto["tmp_name"], $caminho_imagem);
+
+					//Insere os dados no banco
+					$sql = mysqli_query("INSERT INTO post (title, msg, image, date, user) VALUES ($title, $msg, $picture, $time, $user);");
+
+					//Verifica se os dados foram inseridos com sucesso
+					if($sql){
+						echo "Upload complete";
+					}
+
+				}
+
+				//Mostra os erros caso ocorram
+				if(count($error) != 0 ){
+
+					foreach ($error as $erro) {
+						echo $erro."<br />";
+					}
+
+				}
 
 			}
 
-		} else {
-
-			echo "Upload error";
 
 		}
-
-
 
 		// SEND E-MAIL:
 

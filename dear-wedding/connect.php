@@ -2,7 +2,7 @@
 
 	$serv = "localhost";
 	$user = "root";
-	$password = "admin";
+	$password = "";
 	$dbname = "progweb";
 
 	$mysqli = new mysqli($serv, $user, $password, $dbname);
