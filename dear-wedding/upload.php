@@ -1,8 +1,8 @@
 <?php
-
 			require_once("connect.php");
 			require_once("check.php");
-
+			date_default_timezone_set('America/Sao_Paulo');
+			
 			if (isset($_POST['submit'])) {
 	
 			// Recupera os dados dos campos
@@ -12,8 +12,7 @@
 			$msg = $_POST['msg'];
 			$user = $_SESSION['idUser'];
 			$picture = $_FILES["picture"];
-			$time = date_timestamp_get($date);
-
+			$time = date("Y-m-d H:i:s");;
 			// Se a foto estiver sido selecionada
 			if (!empty($picture["name"])) {
 		 
@@ -58,51 +57,46 @@
 					}
 				}
 			}
-		}
 
-		// SEND E-MAIL:
+				require_once("phpmailer/class.phpmailer.php");
+				require_once("phpmailer/class.smtp.php");
 
-		$send = "Title: ".$title."Message: ".$msg;
+				$mail = new PHPMailer(true);                             // Passing `true` enables exceptions
+				try {
+				    //Server settings
+				    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+				    $mail->isSMTP();                                      // Set mailer to use SMTP
+				    $mail->Host = 'smtp.gmail.com';  					  // Specify main and backup SMTP servers
+				    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+				    $mail->Username = 'd3arwedding@gmail.com';                 // SMTP username
+				    $mail->Password = 'dearwedding';                           // SMTP password
+				    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+				    $mail->Port = 465;                                    // TCP port to connect to
 
-		require("phpmailer/class.phpmailer.php");
+				    //Recipients
+				    $mail->setFrom('d3arwedding@gmail.com', 'Dear Wedding');//Email do Remetente e Nome
+				    $mail->addAddress($email, $user);// Destinatário
+				    //$mail->addAddress($email);               // Name is optional
+				    // $mail->addReplyTo('info@example.com', 'Information');
+				    // $mail->addCC('cc@example.com');
+				    // $mail->addBCC('bcc@example.com');
 
-		define('GUSER', 'd3arwedding@gmail.com');	// <-- Insira aqui o seu GMail
-		define('GPWD', 'dearwedding');
-		
-		function smtpmailer($para, $de, $de_nome, $assunto, $corpo) { 
+				    //Attachments
+				    // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+				    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
-			global $error;
-			$mail = new PHPMailer();
-			$mail->IsSMTP();		// Ativar SMTP
-			$mail->SMTPDebug = 0;		// Debugar: 1 = erros e mensagens, 2 = mensagens apenas
-			$mail->SMTPAuth = true;		// Autenticação ativada
-			$mail->SMTPSecure = 'ssl';	// SSL REQUERIDO pelo GMail
-			$mail->Host = 'smtp.gmail.com';	// SMTP utilizado
-			$mail->Port = 465;  		// A porta 465- 587 deverá estar aberta em seu servidor
-			$mail->Username = GUSER;
-			$mail->Password = GPWD;
-			$mail->SetFrom($de, $de_nome);
-			$mail->Subject = $assunto;
-			$mail->Body = $corpo;
-			$mail->AddAddress($para);
-			if(!$mail->Send()) {
-				$error = 'Mail error: '.$mail->ErrorInfo; 
-				return false;
-			} else {
-				$error = 'Mensagem enviada!';
-				return true;
+				    //Content
+				    $mail->isHTML(true);// Set email format to HTML
+				    $mail->Subject = 'Enviando email teste!'; //Assunto do email
+				    $mail->Body    = 'Teste do corpo do email!';//Corpo do email
+				    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+				    $mail->send();
+				    echo 'Message has been sent';
+				    echo "<a href='feed.php'>Return to feed</a>";
+				} catch (Exception $e) {
+				    echo 'Message could not be sent.';
+				    echo 'Mailer Error: ' . $mail->ErrorInfo;
+				}
 			}
-		}
-
-		// Insira abaixo o email que irá receber a mensagem, o email que irá enviar (o mesmo da variável GUSER), 
-		//o nome do email que envia a mensagem, o Assunto da mensagem e por último a variável com o corpo do email.
-
-		if (smtpmailer($email, 'd3arwedding@gmail.com','DEAR WEDDING' , "E-mail de ".$email, $send)) {
-
-			echo "Enviado com sucesso";
-
-		}
-		if (!empty($error)) echo $error;
-
-
 ?>

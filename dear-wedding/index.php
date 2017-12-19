@@ -4,11 +4,15 @@
 
 <head>
 
-	<title> Dead Wedding </title>
+	<title> Dear Wedding </title>
 
 	<meta charset="utf-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--- FAVICON -->
+
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
 
 	<!--- CSS -->
 
@@ -33,9 +37,10 @@
 
 <body>
 <center>
+
 	<div class="text">
 
-		<h1> 
+		<h1> 		
 
 			Welcome to 
 			

@@ -21,8 +21,8 @@ CREATE TABLE post (
 	idPost  int PRIMARY KEY not null auto_increment,
 	title varchar(60) not null,
 	msg text,
-	image blob not null,
+	image varchar(255) not null,
 	date timestamp default current_timestamp(),
-	user INT not null,
+	user SERIAL not null,
 	FOREIGN KEY (user) REFERENCES user(idUser)  
 ) DEFAULT CHARSET=utf8;

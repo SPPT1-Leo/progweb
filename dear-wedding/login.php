@@ -6,39 +6,39 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--- FAVICON -->
+
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+
 	<!--- CSS -->
 
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 
 </head>
 <body>
-<!---
-<center>
-<div id='login'> 
-<form action="verifica.php" method="post">
-	
-	<label>User: </label>
-		<input type="text" name="user"> <br><br>
-	<label>Password: </label>
-		<input type="password" name="passwd"><br><br>
-	<input type="submit" name="go">
-
-</form>
-</div>
-</center>
--->
 
 <div class="container">
+
 	<div class="login-container">
+
             <div id="output"></div>
-            <div class="avatar"></div>
+
+            <img src="img/loguinho.png" class="logo">
+
             <div class="form-box">
+
                 <form action="verifica.php" method="post">
+
                     <input name="user" type="text" placeholder="username">
+
                     <input type="password" placeholder="password" name="passwd">
-                    <button class="btn btn-info btn-block login" type="submit" name="go">Login</button>
+
+                    <button class="btn btn-info btn-block login" type="submit" name="go">login</button>
+
                 </form>
+
             </div>
+            
         </div>
         
 </div>
