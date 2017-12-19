@@ -1,88 +1,70 @@
 <?php
 
-		require_once("connect.php");
-		require_once("check.php");
+			require_once("connect.php");
+			require_once("check.php");
+
+			if (isset($_POST['submit'])) {
 	
-		// $picture = $_FILES['picture'];
-		// $title = $_POST['title'];
-		// $email = $_POST['email'];
-		// $msg = $_POST['msg'];
-		// $user = $_SESSION['idUser'];
-		// $time = now();
-
-		//POST
-		
-			// CÓDIGO AQUI
-		
-		//Verifica se a foto foi selecionada
-
-		if(isset($_POST['Submit'])){
-
-			$picture = $_FILES['picture'];
+			// Recupera os dados dos campos
+			$date = date_create();
 			$title = $_POST['title'];
 			$email = $_POST['email'];
 			$msg = $_POST['msg'];
 			$user = $_SESSION['idUser'];
-			$time = now();
+			$picture = $_FILES["picture"];
+			$time = date_timestamp_get($date);
 
-			if(!empty($picture["name"])){
-
+			// Se a foto estiver sido selecionada
+			if (!empty($picture["name"])) {
+		 
 				$error = array();
-
-				// Verifica se é uma imagem
-
-				if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $picture["type"])){
-
-					$error[1] = "Isso não é uma imagem!";
-
-				}
-
-				//Pega as dimensões da imagem
-				$dimensoes = getimagesize($foto['tmp_name']);
-
-				if(count($error) == 0){
-
-					//Pega a extensão da imagem.
+		 
+		    	// Verifica se o arquivo é uma imagem
+		    	if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $picture["type"])){
+		     	   $error[1] = "This is not a image.";
+		   	 	} 
+			
+				// Pega as dimensões da imagem
+				$size = getimagesize($picture["tmp_name"]);
+		 
+				// Se não houver nenhum erro
+				if (count($error) == 0) {
+				
+					// Pega extensão da imagem
 					preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $picture["name"], $ext);
-
-					//Gera um nome único para a imagem
-					$nome_imagem = md5(uniqid(time())) . "." . $ext[1];
-
-					//Caminho onde ficará a imagem
-					$caminho_imagem = "images/" . $nome_imagem;
-
-					//Faz o upload da imagem para a pasta
-					move_uploaded_file($foto["tmp_name"], $caminho_imagem);
-
-					//Insere os dados no banco
-					$sql = mysqli_query("INSERT INTO post (title, msg, image, date, user) VALUES ($title, $msg, $picture, $time, $user);");
-
-					//Verifica se os dados foram inseridos com sucesso
-					if($sql){
-						echo "Upload complete";
+		 
+		        	// Gera um nome único para a imagem
+		        	$image_name = md5(uniqid(time())) . "." . $ext[1];
+		 
+		        	// Caminho de onde ficará a imagem
+		        	$image_path = "images/" . $image_name;
+		 
+					// Faz o upload da imagem para seu respectivo caminho
+					move_uploaded_file($picture["tmp_name"], $image_path);
+				
+					// Insere os dados no banco
+					$sql = mysqli_query($mysqli,"INSERT INTO `post` (title, msg, image, date, user) VALUES ('".$title."', '".$msg."', '".$image_name."', '".$time."', '".$user."')");
+				
+					// Se os dados forem inseridos com sucesso
+					if ($sql){
+						echo "Upload sucessfully.";
 					}
-
 				}
-
-				//Mostra os erros caso ocorram
-				if(count($error) != 0 ){
-
+			
+				// Se houver mensagens de erro, exibe-as
+				if (count($error) != 0) {
 					foreach ($error as $erro) {
-						echo $erro."<br />";
+						echo $erro . "<br />";
 					}
-
 				}
-
 			}
-
-
 		}
 
 		// SEND E-MAIL:
 
-		$send = "Title: $title\n Message: $msg";
+		$send = "Title: ".$title."Message: ".$msg;
 
-		require_once("phpmailer/class.phpmailer.php");
+		require("phpmailer/class.phpmailer.php");
 
 		define('GUSER', 'd3arwedding@gmail.com');	// <-- Insira aqui o seu GMail
 		define('GPWD', 'dearwedding');

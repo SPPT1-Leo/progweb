@@ -16,7 +16,7 @@
 </head>
 <body>
 
-	<form method="post" action="upload.php" content-type="multipart/form-data">
+	<form method="POST" action="upload.php" enctype="multipart/form-data">
 			
 		<label> Title </label> <br>
 		<input type="text" name="title"><br>
@@ -30,7 +30,7 @@
 		<label> Message </label> <br>
 		<input type="text" name="msg"><br>
 
-		<input type="submit" name="Submit">
+		<input type="submit" name="submit">
 
 	</form>
 
