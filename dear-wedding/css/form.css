@@ -1,0 +1,88 @@
+body{
+
+background-color: #EEE8AA;
+
+}
+
+.form{
+
+
+background-color: white;
+position: center;
+padding: 50px;
+margin-top: -15px;
+margin-right: 70px;
+margin-left: 70px;
+border-radius: 5px;
+}
+
+h1{
+
+font-family: 'Pacifico', cursive;
+color: #8B864E;
+text-shadow: 0.5px 2px black;
+
+
+
+}
+
+.form label{
+
+font-size: 35px;
+font-family: 'Pacifico', cursive;
+color: #8B864E;
+
+}
+
+.title {
+
+	height: 40px;
+	width: 500px;
+	border-radius: 4px;
+	color: #8B864E;
+	font-size: 15px;
+	border-color: #8B864E;
+	border-width: 1px;
+	margin: 10px;
+}
+
+.email{
+
+	height: 25px;
+	width: 350px;
+	border-radius: 4px;
+	color: #8B864E;
+	font-size: 15px;
+	border-color: #8B864E;
+	border-width: 1px;
+	margin: 15px;
+}
+
+.msg{
+
+	height: 105px;
+	width: 500px;
+	border-radius: 4px;
+	color: #8B864E;
+	font-size: 15px;
+	border-color: #8B864E;
+	border-width: 1px;
+	margin: 10px;
+}
+
+.img{
+
+	margin: 15px;
+	color: #8B864E;
+
+}
+
+.btn {
+
+  background-color: #CDC673;
+  border-radius: 10px;
+  border-color: #CDC673;
+  box-shadow: 0 3px 4px #4F4F4F;
+  width: 100px;
+
+}

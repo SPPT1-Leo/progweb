@@ -14,29 +14,11 @@
 
 	if(!isset($user_check)){
 
-		header("Location: login.php");
+		echo "
+		    <meta http-equiv='refresh' content=' 0 ;url=/login.php'>";
 	
-	}else{
-
-		$counter = time();
-
-		if (!isset($_SESSION['count'])) {
-
-			$_SESSION['count'] = $counter;
-
-		}
-		if ($counter - $_SESSION['count'] >= 50){
-
-			session_unset();
-			session_destroy();
-			header('location:login.php');
-
-		}
-
-		$_SESSION['count']= $counter;
-
 	}
-
+	
 ?>
 
 

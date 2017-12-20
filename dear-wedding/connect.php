@@ -1,9 +1,9 @@
 <?php
 
 	$serv = "localhost";
-	$user = "root";
-	$password = "";
-	$dbname = "progweb";
+	$user = "id4047994_root";
+	$password = "admin";
+	$dbname = "id4047994_progweb";
 
 	$mysqli = new mysqli($serv, $user, $password, $dbname);
 

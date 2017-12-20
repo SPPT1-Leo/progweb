@@ -32,17 +32,19 @@
 			$_SESSION['user'] = $user;
 			$_SESSION['passwd'] = $passwd;
 			$_SESSION['idUser'] = $row['idUser'];
-			$_SESSION['name'] = $row['name'];
-			$_SESSION['last'] = $row['last'];
-			header('location:feed.php');
+			//$_SESSION['name'] = $row['name'];
+			//$_SESSION['last'] = $row['last'];
+			echo "
+		    <meta http-equiv='refresh' content=' 0 ;url=/feed.php'>";
 
 		}else{
 
-			$error = "Incorret name and/or password.";
+			$error = "Incorrect name and/or password.";
 
 			session_destroy();
 			
-			header('location:login.php');
+			echo "
+		    <meta http-equiv='refresh' content=' 0 ;url=/login.php'>";
 
 		}
 	}

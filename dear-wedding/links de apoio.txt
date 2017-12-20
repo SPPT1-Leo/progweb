@@ -1,6 +1,0 @@
-http://rafaelcouto.com.br/upload-simples-de-imagem-com-php-mysql/
-
-https://php.eduardokraus.com/upload-de-imagens-com-php
-
-
-$sql = "INSERT INTO post (title, msg, image, date, user) values ('$title', '$msg', $picture, $time, '$user');";
