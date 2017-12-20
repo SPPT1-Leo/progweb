@@ -23,6 +23,6 @@ CREATE TABLE post (
 	msg text,
 	image varchar(255) not null,
 	date timestamp default current_timestamp(),
-	user SERIAL not null,
+	user INT not null,
 	FOREIGN KEY (user) REFERENCES user(idUser)  
 ) DEFAULT CHARSET=utf8;
